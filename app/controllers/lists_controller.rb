@@ -24,7 +24,10 @@ class ListsController < ApplicationController
      redirect_to '/top'
   end
 
+# index は一覧画面等のアクションとして定義する（索引という意味）
+# 今回、一覧画面には投稿したList全てを表示させるので、全てのデータを取得する記述
   def index
+     @lists = List.all
   end
 
   def show
