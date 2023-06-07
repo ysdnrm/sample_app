@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   get 'lists/:id' => 'lists#show' , as: 'list'
   # as: 'list' は'lists#show' の設定の住所に「list」という名前をつけたということ
 
-  get 'lists/edit'
+  get 'lists/:id/edit' => 'lists#edit' , as: 'edit_list'
+# patch ＝既存データの更新
+  patch 'lists/:id' => 'lists#update' , as: 'update_list'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
