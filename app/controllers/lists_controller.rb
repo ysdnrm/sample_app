@@ -71,6 +71,6 @@ class ListsController < ApplicationController
   # 保存できるカラムを限定することによって、マスアサインメント脆弱性を防ぐことができる
   # privateメソッドの名前は、「モデル名_params」とすることが多い
   def list_params
-    params.require(:list).permit(:title, :body)
+    params.require(:list).permit(:title, :body, :image)
   end
 end

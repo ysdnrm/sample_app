@@ -16,7 +16,22 @@
     <!-- link_to 表示させるテキスト , 名前付きルート [,オプション] (今回はオプションなし）-->
     <!--名前付きルート（routes.rbでつけた処理の名前）（今回は'lists#show'のこと）-->
     <%= link_to list.title, list_path(list.id) %>
-
   </span>
+
+  <p>画像</p>
+
+  <!--「list.image」に対して「.attached?」というimageが存在するかを確認
+      attached?は、画像が存在していればtrue、存在していなければfalseを返す-->
+
+  <!--今回は、imageが存在してれば[list.image]を表示し、なければ用意したno_imageを表示する
+     というif文-->
+  <% if list.image.attached? %>
+    <%= image_tag list.image, size: "200x200" %>
+
+  <!--listに紐ついているimageをimage_tagに渡すことで画像を表示することができます。
+      また、オプションとしてsizeを指定することで画像サイズを変更することができる-->
+  <% else %>
+    <%= image_tag 'no_image', size: "200x200" %>
+  <% end %>
 
 <% end %>
