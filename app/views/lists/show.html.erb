@@ -1,2 +1,11 @@
-<h1>Lists#show</h1>
-<p>Find me in app/views/lists/show.html.erb</p>
+<!--詳細画面の表示内容(投稿したそれぞれの内容）-->
+
+<!--Railsの.erbという形式のファイルでは、<% %> <%= %>と囲むことで、HTMLファイルにRubyのコードを埋め込める-->
+<h2>タイトル</h2>
+<!--指定した[id]の投稿のtitle部分が表示される（htmlとして表示させたいから %= を使う-->
+<p><%= @list.title %></p>
+
+
+<h2>本文</h2>
+<!--指定した[id]のbody部分が表示される-->
+<p><%= @list.body %></p>
