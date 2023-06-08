@@ -62,6 +62,13 @@ class ListsController < ApplicationController
     # showアクションにリダイレクトするために、引数には必ずidが必要
     redirect_to list_path(list.id)
   end
+  
+  # 削除機能のアクション(テーブルからデータが削除させる)
+  def destroy
+    list = List.find(params[:id]) #データ（レコード）を１件取得
+    list.destroy #削除
+    redirect_to '/lists' #一覧画面へリダイレクト
+  end  
 
   # privateは一種の境界線で、「ここから下はこのcontrollerの中でしか呼び出せません」という意味がある。(呼び出し制限)
   # そのため、他のアクション（index,show,createなど）を巻き込まないようにprivateはControllerファイルの一番下のendのすぐ上に書くこと。
