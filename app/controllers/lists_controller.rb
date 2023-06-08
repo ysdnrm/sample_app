@@ -9,26 +9,15 @@ class ListsController < ApplicationController
 
   # 投稿を保存するためのcreateアクション(生成と同時に保存すること)を作成していく。
   def create
-
-     # １.&2. データを受け取り新規登録するためのインスタンス作成
-     # これで新しいModelのインスタンスの作成ができる。
-     # この list.new は、フォームから送られてきた内容を保存するために、
-     # def list_params
-       # params.require(:list).permit(:title, :body)
-     # end
-     # で指定した内容が揃っているか（あっているか）確認し、データベースへの保存の準備する
-     list = List.new(list_params)
-    # paramsとはRailsで送られてきた値を受け取るためのメソッド
-     # 今回はビューファイルへの受け渡しが必要ではないため、ローカル変数を利用(変数の＠なし)
-
-     # 3. Modelインスタンスデータをデータベースに保存するためのsaveメソッド実行
-     # 準備後に、ここでデータベースに実際に保存されます
-     list.save
-
-     # 4. トップ画面へリダイレクト
-     # (投稿した後に自動でトップ画面に戻るようにすること)
-     # 一番最後に記述しているため、処理の最後に詳細画面に遷移します
-     redirect_to list_path(list.id)
+     @list = List.new(list_params)
+    if @list.save
+      redirect_to list_path(@list.id)
+    else
+      render :new
+      #  render :アクション名で、同じコントローラ内の別アクションのViewを表示できます
+      # renderするビューに必要なインスタンス変数は、
+      # createアクション内にあらかじめ用意しなくてはならない
+    end
   end
 
   # index は一覧画面等のアクションとして定義する（索引という意味）
@@ -62,13 +51,14 @@ class ListsController < ApplicationController
     # showアクションにリダイレクトするために、引数には必ずidが必要
     redirect_to list_path(list.id)
   end
-  
+
   # 削除機能のアクション(テーブルからデータが削除させる)
+  # viewを表示しないため、＠いらない
   def destroy
     list = List.find(params[:id]) #データ（レコード）を１件取得
     list.destroy #削除
     redirect_to '/lists' #一覧画面へリダイレクト
-  end  
+  end
 
   # privateは一種の境界線で、「ここから下はこのcontrollerの中でしか呼び出せません」という意味がある。(呼び出し制限)
   # そのため、他のアクション（index,show,createなど）を巻き込まないようにprivateはControllerファイルの一番下のendのすぐ上に書くこと。
