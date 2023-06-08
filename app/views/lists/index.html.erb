@@ -1,26 +1,18 @@
 <!--一覧画面の表示-->
 
-<h1>投稿一覧</h1>
-
-<!--ここでの@lists とはコントローラで決めたインスタンス変数（listsテーブルに保存してあるすべてのデータを指す）-->
-<!--つまり↓の意味は「リストにあるデータを順番に取り出す処理を全部出すまで繰り返す」
-であり、|list|は、「この処理をこのメゾットでは『list』という文字列で扱うこととする」のこと-->
+<div class="list-wrap">
 <% @lists.each do |list| %>
-<!--each文には%の後ろに = は要らない！（ = は実際にhtmlとして表示させたい物にのみ使う）-->
-
-<!--titleカラムの情報を『list』する（つまり、全投稿の全タイトルが表示されるということ）-->
-  <p>タイトル</p>
-
-  <span>
-    <!--一覧画面から詳細画面へ遷移するリンクを設定-->
-    <!-- link_to 表示させるテキスト , 名前付きルート [,オプション] (今回はオプションなし）-->
-    <!--名前付きルート（routes.rbでつけた処理の名前）（今回は'lists#show'のこと）-->
-    <%= link_to list.title, list_path(list.id) %>
-  </span>
-
-  <p>画像</p>
-  <!--listに紐ついているimageをimage_tagに渡すことで画像を表示することができます。
-      また、オプションとしてsizeを指定することで画像サイズを変更することができる-->
-  <%= image_tag list.image, size: "200x200" %>
-
+  <div class="list-box">
+    <% if list.image.attached? %>
+      <%= image_tag list.image, size: "200x200" %>
+    <% else %>
+      <%= image_tag 'no_image', size: "200x200" %>
+    <% end %>
+    <div class="list-comment">
+      <span class="list-body"><%= list.body %></span>
+      <span class="list-title"><%=link_to list.title, list_path(list.id) %></span>
+    </div>
+  </div>
 <% end %>
+</div>
+
