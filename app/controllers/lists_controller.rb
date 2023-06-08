@@ -9,15 +9,17 @@ class ListsController < ApplicationController
 
   # 投稿を保存するためのcreateアクション(生成と同時に保存すること)を作成していく。
   def create
-     @list = List.new(list_params)
-    if @list.save
-      redirect_to list_path(@list.id)
-    else
-      render :new
+    # １. データを受け取り新規登録するためのインスタンス作成
+     list = List.new(list_params)
+      # 2. データをデータベースに保存するためのsaveメソッド実行
+     list.save
+     # 3. フラッシュメッセージを定義し、詳細画面へリダイレクト
+      flash[:notice] = "投稿が成功しました"
+      redirect_to list_path(list.id)
+      # render :new
       #  render :アクション名で、同じコントローラ内の別アクションのViewを表示できます
       # renderするビューに必要なインスタンス変数は、
       # createアクション内にあらかじめ用意しなくてはならない
-    end
   end
 
   # index は一覧画面等のアクションとして定義する（索引という意味）
